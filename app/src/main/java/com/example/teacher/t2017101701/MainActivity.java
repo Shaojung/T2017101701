@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor c = db.query("phone", new String[] {"id", "name", "tel", "addr"}, null, null, null, null, null);
         c.moveToFirst();
         do {
-            Log.d("DB", c.getString(1));
+            Log.d("DB", String.valueOf(c.getInt(0)) + "," + c.getString(1));
         }while(c.moveToNext());
         c.close();
         db.close();
