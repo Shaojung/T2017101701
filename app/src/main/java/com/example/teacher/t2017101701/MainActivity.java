@@ -90,4 +90,11 @@ public class MainActivity extends AppCompatActivity {
         db.insert("phone", null, cv);
         db.close();
     }
+    public void clickDelete(View v)
+    {
+        String path = getFilesDir().getAbsolutePath() + File.separator + "student2.sqlite";
+        SQLiteDatabase db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READWRITE);
+        db.delete("phone", "id=?", new String[] {"2"});
+        db.close();
+    }
 }
