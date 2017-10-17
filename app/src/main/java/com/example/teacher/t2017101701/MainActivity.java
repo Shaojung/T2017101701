@@ -2,6 +2,7 @@ package com.example.teacher.t2017101701;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import java.io.File;
@@ -10,6 +11,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +41,20 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void clickCopy2(View v)
+    {
+        InputStream is = getResources().openRawResource(R.raw.student);
+        URI uri = URI.create("file://" + getFilesDir().getAbsolutePath() + File.separator + "student2.sqlite");
+        Path p = Paths.get(uri);
+        try {
+            Files.copy(is, p, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        File f = new File(getFilesDir() + File.separator + "student2.sqlite");
+        Log.d("FILE", String.valueOf(f.exists()));
 
     }
 }
