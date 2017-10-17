@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,11 +22,14 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 public class MainActivity extends AppCompatActivity {
-
+    EditText ed1, ed2, ed3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ed1 = (EditText) findViewById(R.id.edName);
+        ed2 = (EditText) findViewById(R.id.edTel);
+        ed3 = (EditText) findViewById(R.id.edAddr);
     }
     public void clickCopy(View v) {
         InputStream is = getResources().openRawResource(R.raw.student);
@@ -63,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     public void clickReadDB(View v)
     {
         String path = getFilesDir().getAbsolutePath() + File.separator + "student2.sqlite";
-        SQLiteDatabase db = SQLiteDatabase.openDatabase(path, null, 0);
+        SQLiteDatabase db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
         Cursor c = db.query("phone", new String[] {"id", "name", "tel", "addr"}, null, null, null, null, null);
         c.moveToFirst();
         do {
@@ -78,12 +82,11 @@ public class MainActivity extends AppCompatActivity {
         String path = getFilesDir().getAbsolutePath() + File.separator + "student2.sqlite";
         SQLiteDatabase db = SQLiteDatabase.openDatabase(path, null, 0);
         ContentValues cv = new ContentValues();
-        cv.put("name", "BBB");
-        cv.put("tel", "789");
-        cv.put("addr", "XXBBZZ");
+        cv.put("name", ed1.getText().toString());
+        cv.put("tel", ed2.getText().toString());
+        cv.put("addr", ed3.getText().toString());
 
         db.insert("phone", null, cv);
         db.close();
-
     }
 }
