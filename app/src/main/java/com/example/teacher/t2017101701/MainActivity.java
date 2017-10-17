@@ -51,17 +51,18 @@ public class MainActivity extends AppCompatActivity {
     }
     public void clickCopy2(View v)
     {
-        InputStream is = getResources().openRawResource(R.raw.student);
-        URI uri = URI.create("file://" + getFilesDir().getAbsolutePath() + File.separator + "student2.sqlite");
-        Path p = Paths.get(uri);
-        try {
-            Files.copy(is, p, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         File f = new File(getFilesDir() + File.separator + "student2.sqlite");
-        Log.d("FILE", String.valueOf(f.exists()));
+        if (!f.exists())
+        {
+            InputStream is = getResources().openRawResource(R.raw.student);
+            URI uri = URI.create("file://" + getFilesDir().getAbsolutePath() + File.separator + "student2.sqlite");
+            Path p = Paths.get(uri);
+            try {
+                Files.copy(is, p, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
     public void clickReadDB(View v)
