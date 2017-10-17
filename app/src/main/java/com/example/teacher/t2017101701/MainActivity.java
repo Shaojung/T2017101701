@@ -1,5 +1,6 @@
 package com.example.teacher.t2017101701;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -65,7 +66,24 @@ public class MainActivity extends AppCompatActivity {
         SQLiteDatabase db = SQLiteDatabase.openDatabase(path, null, 0);
         Cursor c = db.query("phone", new String[] {"id", "name", "tel", "addr"}, null, null, null, null, null);
         c.moveToFirst();
-        Log.d("DB", c.getString(1));
+        do {
+            Log.d("DB", c.getString(1));
+        }while(c.moveToNext());
+        c.close();
+        db.close();
+
+    }
+    public void clickInsert(View v)
+    {
+        String path = getFilesDir().getAbsolutePath() + File.separator + "student2.sqlite";
+        SQLiteDatabase db = SQLiteDatabase.openDatabase(path, null, 0);
+        ContentValues cv = new ContentValues();
+        cv.put("name", "BBB");
+        cv.put("tel", "789");
+        cv.put("addr", "XXBBZZ");
+
+        db.insert("phone", null, cv);
+        db.close();
 
     }
 }
