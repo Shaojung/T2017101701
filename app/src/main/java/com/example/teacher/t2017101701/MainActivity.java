@@ -1,5 +1,7 @@
 package com.example.teacher.t2017101701;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -55,6 +57,15 @@ public class MainActivity extends AppCompatActivity {
 
         File f = new File(getFilesDir() + File.separator + "student2.sqlite");
         Log.d("FILE", String.valueOf(f.exists()));
+
+    }
+    public void clickReadDB(View v)
+    {
+        String path = getFilesDir().getAbsolutePath() + File.separator + "student2.sqlite";
+        SQLiteDatabase db = SQLiteDatabase.openDatabase(path, null, 0);
+        Cursor c = db.query("phone", new String[] {"id", "name", "tel", "addr"}, null, null, null, null, null);
+        c.moveToFirst();
+        Log.d("DB", c.getString(1));
 
     }
 }
